@@ -1,0 +1,7 @@
+allow:
+  - net
+  - env
+scripts:
+  start:
+    cmd: deno run src/app.ts
+    imap: import_map.json
