@@ -1,6 +1,8 @@
 allow:
   - net
   - env
+envFile:
+  - .env
 scripts:
   start:
     cmd: deno run src/app.ts
