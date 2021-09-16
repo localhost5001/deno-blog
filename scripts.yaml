@@ -1,6 +1,3 @@
-allow:
-  - net
-  - env
 envFile:
   - .env
 scripts:
@@ -8,3 +5,22 @@ scripts:
     cmd: deno run src/app.ts
     imap: import_map.json
     watch: true
+    allow:
+      - net
+      - env
+  db-migrate:
+    cmd: deno run https://deno.land/x/nessie/cli.ts migrate
+    unstable: true
+    allow:
+      - env
+      - read
+      - write
+      - net
+  db-make:
+    cmd: deno run https://deno.land/x/nessie/cli.ts make:migration
+    unstable: true
+    allow:
+      - env
+      - read
+      - write
+      - net
