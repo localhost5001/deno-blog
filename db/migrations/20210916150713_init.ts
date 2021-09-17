@@ -1,13 +1,13 @@
 import {
-	AbstractMigration,
-	ClientPostgreSQL,
-	Info,
-} from 'https://deno.land/x/nessie@2.0.1/mod.ts';
+  AbstractMigration,
+  ClientPostgreSQL,
+  Info,
+} from "https://deno.land/x/nessie@2.0.1/mod.ts";
 
 export default class extends AbstractMigration<ClientPostgreSQL> {
-	/** Runs on migrate */
-	async up(info: Info): Promise<void> {
-		await this.client.queryArray(`
+  /** Runs on migrate */
+  async up(info: Info): Promise<void> {
+    await this.client.queryArray(`
       CREATE TABLE Users (
           user_id SERIAL PRIMARY KEY,
           name VARCHAR(255) UNIQUE NOT NULL,
@@ -17,14 +17,14 @@ export default class extends AbstractMigration<ClientPostgreSQL> {
       )
   `);
 
-		await this.client.queryArray(`
+    await this.client.queryArray(`
       CREATE TABLE Roles (
           role_id SERIAL PRIMARY KEY,
           name varchar(50) UNIQUE NOT NULL
       )
   `);
 
-		await this.client.queryArray(`
+    await this.client.queryArray(`
       CREATE TABLE UsersRoles (
           user_id INT NOT NULL,
           role_ID INT NOT NULL,
@@ -37,7 +37,7 @@ export default class extends AbstractMigration<ClientPostgreSQL> {
       )
   `);
 
-		await this.client.queryArray(`
+    await this.client.queryArray(`
       CREATE TABLE Categories (
           category_id SERIAL PRIMARY KEY,
           title VARCHAR(50) NOT NULL,
@@ -45,7 +45,7 @@ export default class extends AbstractMigration<ClientPostgreSQL> {
       )
   `);
 
-		await this.client.queryArray(`
+    await this.client.queryArray(`
       CREATE TABLE Posts (
           post_id SERIAL PRIMARY KEY,
           title VARCHAR(50) NOT NULL,
@@ -58,18 +58,18 @@ export default class extends AbstractMigration<ClientPostgreSQL> {
               REFERENCES Categories (category_id)
       )
   `);
-	}
+  }
 
-	/** Runs on rollback */
-	async down(info: Info): Promise<void> {
-		await this.client.queryArray('DROP TABLE Posts');
+  /** Runs on rollback */
+  async down(info: Info): Promise<void> {
+    await this.client.queryArray("DROP TABLE Posts");
 
-		await this.client.queryArray('DROP TABLE Categories');
+    await this.client.queryArray("DROP TABLE Categories");
 
-		await this.client.queryArray('DROP TABLE UsersRoles');
+    await this.client.queryArray("DROP TABLE UsersRoles");
 
-		await this.client.queryArray('DROP TABLE Roles');
+    await this.client.queryArray("DROP TABLE Roles");
 
-		await this.client.queryArray('DROP TABLE Users');
-	}
+    await this.client.queryArray("DROP TABLE Users");
+  }
 }
